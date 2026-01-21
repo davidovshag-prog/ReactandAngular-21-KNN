@@ -26,4 +26,13 @@ git remote add origin https://github.com/novakvova/ReactAndAngular_21KN.git
 git push -u origin main
 ```
 
+#Оновлення проекту на github
+```
+git status
+git add .
+git status
+git commit -m"Текст коміту, що ми зробили"
+git push
+```
+
 
