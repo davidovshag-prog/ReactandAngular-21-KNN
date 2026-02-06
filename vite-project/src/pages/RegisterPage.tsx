@@ -2,6 +2,8 @@ import {Button, Form, Input, Upload} from "antd";
 import type {IRegisterForm} from "../types/IRegisterForm.ts";
 import {UserOutlined} from "@ant-design/icons";
 import {useState} from "react";
+import type {RcFile} from "antd/es/upload";
+import type {UploadFile} from "antd/lib";
 
 const RegisterPage = () =>
 {
@@ -13,7 +15,36 @@ const RegisterPage = () =>
 
     //Коли будемо нажимати кнопку реєстрація
     const onSubmitHandler = (values: IRegisterForm) => {
-        console.log("Submit Result", values);
+        if(myFileUpload == null) {
+            alert("Оберіть фото!");
+            return;
+        }
+
+        //LocalStorage - це спеціальна память - у веб браузері, де можна
+        //зберігати інформацію користувача. Туди має доступ поточна сторінка
+        //де ви працюєте - Ваш домен - http://localhost:5173
+
+        //localStorage.name = `${values.lastName} ${values.firstName} ${values.middleName}`;
+        //Давайте перетвори дані у формат JSON
+        // JSON - це звичайний рядок, який виглядає, як обєкт JavaScript
+        //
+        // const base64 = (values.image as Array<UploadFile>)[0].thumbUrl;
+        // console.log("base64 image", base64);
+
+        //Як перетворити File у Base64
+         const fileReader = new FileReader();
+         fileReader.readAsDataURL(myFileUpload);
+         fileReader.onload = () => {
+             const base64 = fileReader.result as string;
+             console.log("base64 image file", base64);
+             const json = JSON.stringify({...values, image: base64});
+             console.log("JSON DATA", json);
+             localStorage.setItem("user", json);
+         }
+        //myFileUpload
+        // const json = JSON.stringify(values);
+        // console.log("JSON DATA", json);
+        //console.log("Submit Result", values);
     }
 
     //Коли ми обрали файл із зображенням
