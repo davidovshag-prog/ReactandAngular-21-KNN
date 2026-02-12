@@ -2,13 +2,16 @@ import {Button, Form, Input, Upload} from "antd";
 import type {IRegisterForm} from "../types/IRegisterForm.ts";
 import {UserOutlined} from "@ant-design/icons";
 import {useState} from "react";
-import type {RcFile} from "antd/es/upload";
-import type {UploadFile} from "antd/lib";
+import {useNavigate} from "react-router-dom";
+// import type {RcFile} from "antd/es/upload";
+// import type {UploadFile} from "antd/lib";
 
 const RegisterPage = () =>
 {
     //Ми створили форму
     const [form] = Form.useForm<IRegisterForm>();
+
+    const navigate = useNavigate();
 
     const [myFileUpload, setMyFileUpload] =
              useState<File|null>(null);
@@ -40,6 +43,7 @@ const RegisterPage = () =>
              const json = JSON.stringify({...values, image: base64});
              console.log("JSON DATA", json);
              localStorage.setItem("user", json);
+             navigate("/profile");
          }
         //myFileUpload
         // const json = JSON.stringify(values);
